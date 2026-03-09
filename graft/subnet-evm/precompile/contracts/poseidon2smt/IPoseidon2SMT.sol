@@ -3,12 +3,13 @@ pragma solidity ^0.8.24;
 
 interface IPoseidon2SMT {
     /// @notice Compute a sparse Merkle tree root from pre-hashed leaves.
-    /// Leaves occupy indices 0..len-1; all other positions use the canonical
-    /// zero (padding) hash. Internal nodes use Poseidon2 with domain tag 2.
+    /// Leaves occupy indices 0..len-1; all other positions use the provided
+    /// zeroLeafHash. Internal nodes use Poseidon2 with domain tag 2.
     /// @param leafHashes Pre-hashed leaf values (each must be < BN254 scalar field order)
     /// @param depth Tree depth (leaves at height 0, root at height `depth`)
+    /// @param zeroLeafHash Hash value for padding leaf positions (circuit-specific)
     /// @return root The computed Merkle root
-    function computeRoot(uint256[] calldata leafHashes, uint8 depth)
+    function computeRoot(uint256[] calldata leafHashes, uint8 depth, uint256 zeroLeafHash)
         external view returns (uint256 root);
 
     /// @notice Verify a sparse Merkle inclusion proof.
