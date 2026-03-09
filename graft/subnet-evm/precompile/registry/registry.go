@@ -13,6 +13,9 @@ import (
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/rewardmanager"
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/txallowlist"
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/warp"
+
+	// MuriData custom precompiles (0x0300... range)
+	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/groth16verifier"
 )
 
 // This list is kept just for reference. The actual addresses defined in respective packages of precompiles.
@@ -33,5 +36,5 @@ import (
 // FeeManagerAddress                = common.HexToAddress("0x0200000000000000000000000000000000000003")
 // RewardManagerAddress             = common.HexToAddress("0x0200000000000000000000000000000000000004")
 // WarpAddress                      = common.HexToAddress("0x0200000000000000000000000000000000000005")
-// ADD YOUR PRECOMPILE HERE
-// {YourPrecompile}Address          = common.HexToAddress("0x03000000000000000000000000000000000000??")
+// MuriData custom precompiles:
+// Groth16VerifierAddress            = common.HexToAddress("0x0300000000000000000000000000000000000001")
