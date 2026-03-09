@@ -10,15 +10,27 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  # Images are published under the repo owner's namespace
-  AVALANCHEGO_IMAGE: ghcr.io/${{ github.repository_owner }}/murichain-avalanchego
-  SUBNET_EVM_IMAGE: ghcr.io/${{ github.repository_owner }}/murichain-subnet-evm
   GO_VERSION: "1.25.8"
 
 jobs:
+  # Lowercase the owner name for Docker image references (Docker requires lowercase)
+  prepare:
+    name: Prepare image names
+    runs-on: ubuntu-latest
+    outputs:
+      avalanchego-image: ghcr.io/${{ steps.lower.outputs.owner }}/murichain-avalanchego
+      subnet-evm-image: ghcr.io/${{ steps.lower.outputs.owner }}/murichain-subnet-evm
+    steps:
+      - name: Lowercase owner
+        id: lower
+        env:
+          OWNER: ${{ github.repository_owner }}
+        run: echo "owner=${OWNER,,}" >> "$GITHUB_OUTPUT"
+
   build-avalanchego:
     name: Build avalanchego base image
     runs-on: ubuntu-latest
+    needs: prepare
     permissions:
       contents: read
       packages: write
@@ -44,7 +56,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.AVALANCHEGO_IMAGE }}
+          images: ${{ needs.prepare.outputs.avalanchego-image }}
           tags: |
             type=sha,prefix=
             type=ref,event=branch
@@ -69,7 +81,7 @@ jobs:
   build-subnet-evm:
     name: Build subnet-evm plugin image
     runs-on: ubuntu-latest
-    needs: build-avalanchego
+    needs: [prepare, build-avalanchego]
     permissions:
       contents: read
       packages: write
@@ -93,18 +105,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.SUBNET_EVM_IMAGE }}
+          images: ${{ needs.prepare.outputs.subnet-evm-image }}
           tags: |
             type=sha,prefix=
             type=ref,event=branch
             type=match,pattern=murichain-v(.*),group=1
             type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push subnet-evm image
-        env:
-          BASE_IMAGE_TAG: ${{ needs.build-avalanchego.outputs.image-tag }}
-        run: |
-          echo "Using base image tag: ${BASE_IMAGE_TAG}"
 
       - name: Build and push subnet-evm image
         uses: docker/build-push-action@v6
@@ -117,7 +123,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GO_VERSION=${{ env.GO_VERSION }}
-            AVALANCHEGO_NODE_IMAGE=${{ env.AVALANCHEGO_IMAGE }}:${{ needs.build-avalanchego.outputs.image-tag }}
+            AVALANCHEGO_NODE_IMAGE=${{ needs.prepare.outputs.avalanchego-image }}:${{ needs.build-avalanchego.outputs.image-tag }}
             SUBNET_EVM_COMMIT=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
