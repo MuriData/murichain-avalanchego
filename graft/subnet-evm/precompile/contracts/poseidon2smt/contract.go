@@ -36,7 +36,7 @@ var (
 	Poseidon2SMTABI = contract.ParseABI(Poseidon2SMTRawABI)
 )
 
-// computeRootHandler is the precompile entry point for computeRoot(uint256[],uint8).
+// computeRootHandler is the precompile entry point for computeRoot(uint256[],uint8,uint256).
 func computeRootHandler(
 	_ contract.AccessibleState,
 	_ common.Address,
@@ -49,8 +49,8 @@ func computeRootHandler(
 	if err != nil {
 		return nil, suppliedGas, fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	if len(args) != 2 {
-		return nil, suppliedGas, fmt.Errorf("%w: expected 2 arguments, got %d", ErrInvalidInput, len(args))
+	if len(args) != 3 {
+		return nil, suppliedGas, fmt.Errorf("%w: expected 3 arguments, got %d", ErrInvalidInput, len(args))
 	}
 
 	leafHashes, err := extractUint256Slice(args[0])
@@ -60,6 +60,10 @@ func computeRootHandler(
 	depth, ok := args[1].(uint8)
 	if !ok {
 		return nil, suppliedGas, fmt.Errorf("%w: depth must be uint8", ErrInvalidInput)
+	}
+	zeroLeafHash, ok := args[2].(*big.Int)
+	if !ok || zeroLeafHash == nil {
+		return nil, suppliedGas, fmt.Errorf("%w: zeroLeafHash must be uint256", ErrInvalidInput)
 	}
 
 	// Validate inputs.
@@ -72,6 +76,9 @@ func computeRootHandler(
 	if depth > 0 && len(leafHashes) > (1<<depth) {
 		return nil, suppliedGas, fmt.Errorf("%w: %d leaves exceeds 2^%d", ErrTooManyLeaves, len(leafHashes), depth)
 	}
+	if zeroLeafHash.Sign() < 0 || zeroLeafHash.Cmp(rOrder) >= 0 {
+		return nil, suppliedGas, fmt.Errorf("zeroLeafHash not in scalar field")
+	}
 	for i, v := range leafHashes {
 		if v.Sign() < 0 || v.Cmp(rOrder) >= 0 {
 			return nil, suppliedGas, fmt.Errorf("input not in scalar field: leafHashes[%d]", i)
@@ -79,6 +86,7 @@ func computeRootHandler(
 	}
 
 	// Calculate and deduct gas.
+	// Include depth*perLevel for zero chain precomputation.
 	requiredGas := ComputeRootBaseGas +
 		uint64(len(leafHashes))*ComputeRootPerLeafGas +
 		uint64(depth)*ComputeRootPerLevelGas
@@ -88,7 +96,7 @@ func computeRootHandler(
 	}
 
 	// Compute root.
-	root, err := ComputeRootBigInt(leafHashes, int(depth))
+	root, err := ComputeRootBigInt(leafHashes, int(depth), zeroLeafHash)
 	if err != nil {
 		return nil, remainingGas, fmt.Errorf("compute root failed: %w", err)
 	}
