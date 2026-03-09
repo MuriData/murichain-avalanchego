@@ -63,19 +63,23 @@ jobs:
   # ─── Binary Builds ─────────────────────────────────────────────────
   build-binaries:
     name: Build binaries (${{ matrix.goos }}/${{ matrix.goarch }})
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     needs: [prepare, test-precompiles]
     strategy:
       matrix:
         include:
           - goos: linux
             goarch: amd64
+            runner: ubuntu-latest
           - goos: linux
             goarch: arm64
+            runner: ubuntu-latest
           - goos: darwin
             goarch: amd64
+            runner: macos-13
           - goos: darwin
             goarch: arm64
+            runner: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -84,25 +88,19 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Install cross-compiler
-        if: matrix.goarch == 'arm64' && matrix.goos == 'linux'
+      - name: Install cross-compiler (linux/arm64)
+        if: matrix.goos == 'linux' && matrix.goarch == 'arm64'
         run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu
 
       - name: Build avalanchego
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: "1"
           CGO_CFLAGS: "-O2 -D__BLST_PORTABLE__"
         run: |
-          # Set cross-compiler for linux/arm64
           if [ "$GOOS" = "linux" ] && [ "$GOARCH" = "arm64" ]; then
             export CC=aarch64-linux-gnu-gcc
-            export CGO_ENABLED=1
-          elif [ "$GOOS" = "linux" ]; then
-            export CGO_ENABLED=1
-          else
-            # Darwin cross-compile from Linux: disable CGO
-            export CGO_ENABLED=0
           fi
 
           COMMIT="${GITHUB_SHA::8}"
@@ -115,15 +113,11 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: "1"
           CGO_CFLAGS: "-O2 -D__BLST_PORTABLE__"
         run: |
           if [ "$GOOS" = "linux" ] && [ "$GOARCH" = "arm64" ]; then
             export CC=aarch64-linux-gnu-gcc
-            export CGO_ENABLED=1
-          elif [ "$GOOS" = "linux" ]; then
-            export CGO_ENABLED=1
-          else
-            export CGO_ENABLED=0
           fi
 
           COMMIT="${GITHUB_SHA::8}"
