@@ -16,6 +16,7 @@ import (
 
 	// MuriData custom precompiles (0x0300... range)
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/groth16verifier"
+	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/poseidon2hasher"
 )
 
 // This list is kept just for reference. The actual addresses defined in respective packages of precompiles.
@@ -38,3 +39,4 @@ import (
 // WarpAddress                      = common.HexToAddress("0x0200000000000000000000000000000000000005")
 // MuriData custom precompiles:
 // Groth16VerifierAddress            = common.HexToAddress("0x0300000000000000000000000000000000000001")
+// Poseidon2HasherAddress            = common.HexToAddress("0x0300000000000000000000000000000000000002")
