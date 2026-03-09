@@ -16,6 +16,7 @@ import (
 
 	// MuriData custom precompiles (0x0300... range)
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/groth16verifier"
+	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/plonkverifier"
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/poseidon2hasher"
 	_ "github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contracts/poseidon2smt"
 )
@@ -42,3 +43,4 @@ import (
 // Groth16VerifierAddress            = common.HexToAddress("0x0300000000000000000000000000000000000001")
 // Poseidon2HasherAddress            = common.HexToAddress("0x0300000000000000000000000000000000000002")
 // Poseidon2SMTAddress               = common.HexToAddress("0x0300000000000000000000000000000000000003")
+// PlonkVerifierAddress              = common.HexToAddress("0x0300000000000000000000000000000000000004")

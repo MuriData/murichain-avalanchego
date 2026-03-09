@@ -1,0 +1,96 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "proof",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "publicInputs",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint64",
+        "name": "vkDomainSize",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "vkNbPublicInputs",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vkOmega",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkQL",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkQR",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkQM",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkQO",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkQK",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkS1",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkS2",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkS3",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkG2Srs0",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkG2Srs1",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vkCosetShift",
+        "type": "uint256"
+      }
+    ],
+    "name": "verifyProof",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "valid",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
