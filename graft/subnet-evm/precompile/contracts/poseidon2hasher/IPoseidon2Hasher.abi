@@ -1,0 +1,26 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "domainTag",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "inputs",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "hash",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "digest",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

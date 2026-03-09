@@ -1,0 +1,50 @@
+// Copyright (C) 2024, MuriData. All rights reserved.
+// See the file LICENSE for licensing terms.
+
+package poseidon2hasher
+
+import (
+	"fmt"
+
+	"github.com/ava-labs/libevm/common"
+
+	"github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/contract"
+	"github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/modules"
+	"github.com/ava-labs/avalanchego/graft/subnet-evm/precompile/precompileconfig"
+)
+
+var _ contract.Configurator = (*configurator)(nil)
+
+// ConfigKey is the key used in JSON config files to specify this precompile config.
+const ConfigKey = "poseidon2HasherConfig"
+
+// ContractAddress is the precompile address.
+var ContractAddress = common.HexToAddress("0x0300000000000000000000000000000000000002")
+
+// Module is the precompile module used to register with the framework.
+var Module = modules.Module{
+	ConfigKey:    ConfigKey,
+	Address:      ContractAddress,
+	Contract:     Poseidon2HasherPrecompile,
+	Configurator: &configurator{},
+}
+
+type configurator struct{}
+
+func init() {
+	if err := modules.RegisterModule(Module); err != nil {
+		panic(err)
+	}
+}
+
+func (*configurator) MakeConfig() precompileconfig.Config {
+	return new(Config)
+}
+
+// Configure is a no-op — the Poseidon2 hasher is stateless.
+func (*configurator) Configure(_ precompileconfig.ChainConfig, cfg precompileconfig.Config, _ contract.StateDB, _ contract.ConfigurationBlockContext) error {
+	if _, ok := cfg.(*Config); !ok {
+		return fmt.Errorf("expected config type %T, got %T: %v", &Config{}, cfg, cfg)
+	}
+	return nil
+}
