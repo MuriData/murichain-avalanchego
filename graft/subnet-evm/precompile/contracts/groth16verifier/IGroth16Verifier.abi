@@ -1,0 +1,100 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[8]",
+        "name": "proof",
+        "type": "uint256[8]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "publicInputs",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkAlpha",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkBetaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkGammaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkDeltaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[2][]",
+        "name": "vkIC",
+        "type": "uint256[2][]"
+      }
+    ],
+    "name": "verifyProof",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "valid",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[4]",
+        "name": "compressedProof",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "publicInputs",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "vkAlpha",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkBetaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkGammaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[4]",
+        "name": "vkDeltaNeg",
+        "type": "uint256[4]"
+      },
+      {
+        "internalType": "uint256[2][]",
+        "name": "vkIC",
+        "type": "uint256[2][]"
+      }
+    ],
+    "name": "verifyCompressedProof",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "valid",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
