@@ -4,8 +4,9 @@
 
 ---
 
-Node implementation for the [Avalanche](https://avax.network) network -
-a blockchains platform with high throughput, and blazing fast transactions.
+# MuriChain Avalanche Integration
+
+Node implementation for the MuriChain network - a fork of [Avalanche](https://avax.network) featuring specialized precompiles (Groth16 Verifiers, Poseidon2 Hashers, PLONK Verifiers) tailored for the MURI (Measurable Unique Replica Integrity) storage protocol.
 
 ## Installation
 
