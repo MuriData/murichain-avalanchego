@@ -59,6 +59,7 @@ jobs:
           go test ./graft/subnet-evm/precompile/contracts/groth16verifier/ -v -timeout 2m
           go test ./graft/subnet-evm/precompile/contracts/poseidon2hasher/ -v -timeout 2m
           go test ./graft/subnet-evm/precompile/contracts/poseidon2smt/ -v -timeout 2m
+          go test ./graft/subnet-evm/precompile/contracts/plonkverifier/ -v -timeout 2m
 
   # ─── Binary Builds ─────────────────────────────────────────────────
   build-binaries:
@@ -288,6 +289,7 @@ jobs:
             - Groth16 BN254 verifier (`0x0300000000000000000000000000000000000001`)
             - Poseidon2 sponge hash (`0x0300000000000000000000000000000000000002`)
             - Poseidon2 sparse Merkle tree (`0x0300000000000000000000000000000000000003`)
+            - PLONK BN254 verifier (`0x0300000000000000000000000000000000000004`)
 
             ### Docker Images
 
