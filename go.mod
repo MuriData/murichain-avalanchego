@@ -97,7 +97,7 @@ require (
 require github.com/ava-labs/avalanchego/graft/evm v0.0.0-00010101000000-000000000000 // indirect
 
 require (
-	github.com/Microsoft/go-winio v0.6.1 // indirect
+	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/VictoriaMetrics/fastcache v1.12.1 // indirect
 	github.com/ava-labs/firewood-go-ethhash/ffi v0.0.18
 	github.com/ava-labs/simplex v0.0.0-20250919142550-9cdfff10fd19

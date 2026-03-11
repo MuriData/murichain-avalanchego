@@ -20,6 +20,7 @@ require (
 	github.com/ava-labs/avalanchego/graft/evm v0.0.0-00010101000000-000000000000
 	github.com/ava-labs/firewood-go-ethhash/ffi v0.0.18
 	github.com/ava-labs/libevm v1.13.15-0.20251210210615-b8e76562a300
+	github.com/consensys/gnark-crypto v0.18.1
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/go-cmd/cmd v1.4.3
@@ -55,7 +56,7 @@ require (
 	connectrpc.com/connect v1.18.1 // indirect
 	connectrpc.com/grpcreflect v1.3.0 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
-	github.com/Microsoft/go-winio v0.6.1 // indirect
+	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/StephenButtolph/canoto v0.17.3 // indirect
 	github.com/ava-labs/avalanchego/graft/coreth v0.0.0-20251203215505-70148edc6eca // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -71,7 +72,6 @@ require (
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/cockroachdb/tokenbucket v0.0.0-20230807174530-cc333fc44b06 // indirect
 	github.com/compose-spec/compose-go v1.20.2 // indirect
-	github.com/consensys/gnark-crypto v0.18.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
 	github.com/crate-crypto/go-ipa v0.0.0-20231025140028-3c0104f4b233 // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.1.0 // indirect
